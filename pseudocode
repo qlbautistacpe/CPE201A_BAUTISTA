@@ -100,7 +100,7 @@ FUNCTION deleteAccount(username)
         DECLARE file_user, file_pass
         DECLARE found = false
         FOR each line in "users.txt"
-            READ username and password
+            READ uname and pass
             IF file_user != username 
                 WRITE username and password to "temp_users.txt"
             ELSE
@@ -118,16 +118,16 @@ FUNCTION deleteAccount(username)
     REMOVE "users.txt"
     RENAME "temp_users.txt", "users.txt"
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    FOR each log file ("sleep_log.txt", "caffeine_log.txt")
-        OPEN log file for reading
-        OPEN temp log file for writing
-        FOR each entry in log file
-            READ uname and other data
-            IF uname != username THEN
-                WRITE entry to temp log file
+    FOR each log file ("sleep_log.txt", "temp_sleep_log.txt")
+        OPEN log file "sleep_log.txt" for reading
+        OPEN temp log "temp_sleep_log.txt" file for writing
+        FOR each entry in log file "sleep_log.txt"
+            READ uname, date, hours
+            IF uname != username
+                WRITE entry to "temp_sleep_log.txt" file
             ENDIF
         ENDFOR
-        CLOSE files
+        CLOSE "sleep_log.txt", "temp_sleep_log.txt"
         REPLACE original log file with temp file
     ENDFOR
 
